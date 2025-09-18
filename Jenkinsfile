@@ -32,7 +32,7 @@ stage('Run Selenium Tests') {
     steps {
         dir('SeleniumTests') {
             // Compile all Java test files
-            bat 'javac -cp "lib/*" -d bin *.java'
+           bat 'javac -cp "lib/*" -d bin src\\*.java'
             
             // Run the JUnit 5 test using ConsoleLauncher
             bat 'java -cp "lib/*;bin" org.junit.platform.console.ConsoleLauncher -c TestTodoApp'
