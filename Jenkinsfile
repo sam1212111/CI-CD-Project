@@ -28,16 +28,20 @@ stage('Build Frontend') {
         }
     }
 }
-
-        stage('Run Selenium Tests') {
-            steps {
-                dir('SeleniumTests') {
-                    // Make sure your App.js points to the deployed backend URL
-                    bat 'java -cp "lib/*;bin" org.junit.platform.console.ConsoleLauncher -c TestTodoApp'
-                    echo "✅ Selenium tests executed against deployed backend."
-                }
-            }
+stage('Run Selenium Tests') {
+    steps {
+        dir('SeleniumTests') {
+            // Compile all Java test files
+            bat 'javac -cp "lib/*" -d bin *.java'
+            
+            // Run the JUnit 5 test using ConsoleLauncher
+            bat 'java -cp "lib/*;bin" org.junit.platform.console.ConsoleLauncher -c TestTodoApp'
+            
+            echo "✅ Selenium tests executed against deployed backend."
         }
+    }
+}
+
 
         stage('Deploy Frontend (Optional)') {
             steps {
