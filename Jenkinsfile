@@ -49,12 +49,7 @@ pipeline {
             }
         }
 
-        stage('Archive Test Results') {
-            steps {
-                junit 'SeleniumTests/bin/test-results/*.xml' // adjust path if needed
-                echo "✅ Test results archived."
-            }
-        }
+        
     }
 
     post {
