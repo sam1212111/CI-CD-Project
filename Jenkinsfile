@@ -22,18 +22,9 @@ stage('Build Frontend') {
     steps {
         dir('frontend') {
             // Check Node and npm versions
-            bat 'node -v'
-            bat 'npm -v'
-          
-
-            // Clean install dependencies
-            bat 'npm ci'
-            bat 'dir'
-            bat 'type package.json'
-
-            // Build frontend
-            bat 'npm run build'
-            echo "✅ Frontend built successfully."
+                    bat 'npm install'
+                    bat 'npm run build'
+                    echo "✅ Frontend built successfully."
         }
     }
 }
