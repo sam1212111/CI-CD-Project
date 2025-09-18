@@ -18,43 +18,44 @@ pipeline {
                 echo "✅ Checked out branch: ${params.BRANCH}"
             }
         }
-stage('Build Frontend') {
-    steps {
-        dir('frontend') {
-            // Check Node and npm versions
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
                     bat 'npm install'
                     bat 'npm run build'
                     echo "✅ Frontend built successfully."
+                }
+            }
         }
-    }
-}
-stage('Run Selenium Tests') {
-    steps {
-        dir('SeleniumTests') {
-            // Compile all Java test files
-           bat 'javac -cp "lib/*" -d bin src\\*.java'
-            
-            // Run the JUnit 5 test using ConsoleLauncher
-            bat 'java -cp "lib/*;bin" org.junit.platform.console.ConsoleLauncher -c TestTodoApp'
-            
-            echo "✅ Selenium tests executed against deployed backend."
-        }
-    }
-}
 
+        stage('Run Selenium Tests') {
+            steps {
+                dir('SeleniumTests') {
+                    // Compile all Java test files
+                    bat 'javac -cp "lib/*" -d bin src\\*.java'
+
+                    // Run the JUnit 5 test using ConsoleLauncher
+                    bat 'java -cp "lib/*;bin" org.junit.platform.console.ConsoleLauncher -c TestTodoApp'
+
+                    echo "✅ Selenium tests executed against deployed backend."
+                }
+            }
+        }
 
         stage('Deploy Frontend (Optional)') {
             steps {
                 echo "🚀 Deploy frontend to hosting (configure your deployment commands here if needed)"
             }
         }
+
+        stage('Archive Test Results') {
+            steps {
+                junit 'SeleniumTests/bin/test-results/*.xml' // adjust path if needed
+                echo "✅ Test results archived."
+            }
+        }
     }
-    stage('Archive Test Results') {
-    steps {
-        junit 'SeleniumTests/bin/test-results/*.xml' // adjust path if needed
-        echo "✅ Test results archived."
-    }
-}
 
     post {
         success {
@@ -64,5 +65,4 @@ stage('Run Selenium Tests') {
             echo "❌ Pipeline failed for branch: ${params.BRANCH}"
         }
     }
-    
 }
