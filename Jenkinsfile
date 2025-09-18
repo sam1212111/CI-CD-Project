@@ -45,7 +45,7 @@ pipeline {
 
         stage('Deploy Frontend (Optional)') {
             steps {
-                echo "🚀 Deploy frontend to hosting (configure your deployment commands here if needed )"
+                echo "🚀 Deploy frontend to hosting (configure your deployment commands here if needed)"
             }
         }
 
