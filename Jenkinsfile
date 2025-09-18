@@ -49,6 +49,12 @@ stage('Run Selenium Tests') {
             }
         }
     }
+    stage('Archive Test Results') {
+    steps {
+        junit 'SeleniumTests/bin/test-results/*.xml' // adjust path if needed
+        echo "✅ Test results archived."
+    }
+}
 
     post {
         success {
@@ -58,4 +64,5 @@ stage('Run Selenium Tests') {
             echo "❌ Pipeline failed for branch: ${params.BRANCH}"
         }
     }
+    
 }
