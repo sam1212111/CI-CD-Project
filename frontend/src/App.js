@@ -53,7 +53,7 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "21px", fontFamily: "Arial" }}>
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
       <h1>To-Do App</h1>
       <input
         value={task}
