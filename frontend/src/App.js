@@ -63,7 +63,7 @@ function App() {
       />
       <button onClick={addTask} style={{ padding: "5px 10px" }}>Add</button>
 
-      <ul style={{ marginTop: "21px" }}>
+      <ul style={{ marginTop: "20px" }}>
         {tasks.map((t, i) => (
           <li key={i} style={{ marginBottom: "10px" }}>
             {t} 
