@@ -18,31 +18,26 @@ pipeline {
                 echo "✅ Checked out branch: ${params.BRANCH}"
             }
         }
-stage('Build Frontend') {
-    steps {
-        dir('frontend') {
-            // Check Node and npm versions
-            bat 'node -v'
-            bat 'npm -v'
-          
 
-            // Clean install dependencies
-            bat 'npm ci'
-            bat 'dir'
-            bat 'type package.json'
-
-            // Build frontend
-            bat 'npm run build'
-            echo "✅ Frontend built successfully."
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    bat 'npm install'
+                    bat 'npm run build'
+                    echo "✅ Frontend built successfully."
+                }
+            }
         }
-    }
-}
 
         stage('Run Selenium Tests') {
             steps {
                 dir('SeleniumTests') {
-                    // Make sure your App.js points to the deployed backend URL
+                    // Compile all Java test files
+                    bat 'javac -cp "lib/*" -d bin src\\*.java'
+
+                    // Run the JUnit 5 test using ConsoleLauncher
                     bat 'java -cp "lib/*;bin" org.junit.platform.console.ConsoleLauncher -c TestTodoApp'
+
                     echo "✅ Selenium tests executed against deployed backend."
                 }
             }
@@ -53,6 +48,8 @@ stage('Build Frontend') {
                 echo "🚀 Deploy frontend to hosting (configure your deployment commands here if needed)"
             }
         }
+
+        
     }
 
     post {

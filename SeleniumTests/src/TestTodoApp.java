@@ -79,7 +79,7 @@ public class TestTodoApp {
         boolean taskGone = wait.until(
                 ExpectedConditions.invisibilityOfElementLocated(By.xpath("//li[contains(text(),'" + taskText + "')]"))
         );
-        assertTrue(taskGone, "Task should be deleted");
+        assertTrue(taskGone, "Task should be deleted ");
         System.out.println("✅ testDeleteTask passed: Task was deleted successfully.");
     }
 
